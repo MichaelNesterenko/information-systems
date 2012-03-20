@@ -46,6 +46,9 @@ public class Engine {
         do {
             List<Integer> currentConflicts = new ArrayList<Integer>(conflicts.get(stepNum - 1));
             Set<String> currentMemory = new HashSet<String>(workingMemory.get(stepNum - 1));
+            if (currentConflicts.size() > 0) {
+                currentConflicts.remove(currentConflicts.size() - 1);
+            }
             workingMemory.add(currentMemory);
             conflicts.add(currentConflicts);
 
@@ -60,7 +63,6 @@ public class Engine {
                 stopEngine = true;
             } else {
                 String addedThen = productions.get(currentConflicts.get(currentConflicts.size() - 1)).getThen();
-                currentConflicts.remove(currentConflicts.size() - 1);
                 currentMemory.add(addedThen);
                 stopEngine = isSolved = STOP_THEN.equals(addedThen);
             }
