@@ -35,4 +35,9 @@ public class Production {
     public int hashCode() {
         return (ifPart == null ? 0 : ifPart.hashCode()) ^ (thenPart == null ? 0 : thenPart.hashCode());
     }
+
+    @Override
+    public String toString() {
+        return ifPart + "->" + thenPart;
+    }
 }
