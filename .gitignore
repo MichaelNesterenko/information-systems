@@ -1,0 +1,7 @@
+.metadata
+target
+.*
+!.gitignore
+*.patch
+*.sh
+*.jpage
