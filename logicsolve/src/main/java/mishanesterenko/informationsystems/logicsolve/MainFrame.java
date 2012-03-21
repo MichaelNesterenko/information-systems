@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.LookAndFeel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -27,7 +26,6 @@ import java.util.Set;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.JTable;
@@ -167,7 +165,7 @@ public class MainFrame extends JFrame {
                     return;
                 }
 
-                productionDataSource.moveProductionUp(currentSelection);
+                productionDataSource.moveProductionDown(currentSelection);
                 if (currentSelection + 1 < productionsTable.getRowCount()) {
                     productionsTable.getSelectionModel().setSelectionInterval(currentSelection + 1, currentSelection + 1);
                 }
@@ -392,8 +390,12 @@ class ProductionTableModel extends AbstractTableModel {
             return false;
         }
 
-        swapItems(productions, index, index - 1);
+        swapItems(productions, index, index + direction);
 
+        fireTableRowsDeleted(Math.max(index, index + direction), Math.max(index, index + direction));
+        fireTableRowsDeleted(Math.min(index, index + direction), Math.min(index, index + direction));
+        fireTableRowsInserted(Math.min(index, index + direction), Math.min(index, index + direction));
+        fireTableRowsInserted(Math.max(index, index + direction), Math.max(index, index + direction));
         return true;
     }
 
